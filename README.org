@@ -1,33 +1,59 @@
-#+TITLE: Directus CMS Frontend
+#+TITLE: Directus CMS with Frontend
 #+AUTHOR: 
 #+DATE: 
 
-A minimal Express.js frontend application for Directus CMS with Google OAuth authentication.
+A full-stack cms starter App. with Directus CMS backend and Express.js frontend with Google OAuth authentication.
 
-* Setup
+* Project Structure
 
-1. *Install Dependencies*
+- =backend/= - Directus CMS instance
+- =frontend/= - Express.js frontend application
+
+* Backend Setup (Directus CMS)
+
+1. *Navigate to Backend Directory*
+   #+BEGIN_SRC bash
+   cd backend
+   #+END_SRC
+
+2. *Install Dependencies*
    #+BEGIN_SRC bash
    npm install
    #+END_SRC
 
-2. *Environment Configuration*
+3. *Configure Environment*
    
-   The =.env= file is already configured with default values:
+   Create a =.env= file in the =backend/= directory with your database and configuration settings.
+
+4. *Start Directus Backend*
+   #+BEGIN_SRC bash
+   npx directus start
+   #+END_SRC
+   
+   The Directus admin interface will be available at =http://localhost:8055=
+
+* Frontend Setup
+
+1. *Navigate to Frontend Directory*
+   #+BEGIN_SRC bash
+   cd frontend
+   #+END_SRC
+
+2. *Install Dependencies*
+   #+BEGIN_SRC bash
+   npm install
+   #+END_SRC
+
+3. *Environment Configuration*
+   
+   The =.env= file should be configured with:
    #+BEGIN_SRC env
    APP_PORT=3000
    DIRECTUS_URL=http://localhost:8055
    APP_PUBLIC_URL=http://localhost:3000
    #+END_SRC
 
-3. *Directus Configuration*
-   
-   Make sure your Directus instance has:
-   - Google OAuth configured
-   - =AUTH_GOOGLE_REDIRECT_ALLOW_LIST= includes =http://localhost:3000/auth/callback=
-   - A =pages= collection with fields: =id=, =title=, =slug=, =content=, =parent=, =order=
-
-4. *Start the Application*
+4. *Start the Frontend Application*
    #+BEGIN_SRC bash
    # Development mode with auto-restart
    npm run dev
@@ -35,10 +61,31 @@ A minimal Express.js frontend application for Directus CMS with Google OAuth aut
    # Production mode
    npm start
    #+END_SRC
+   
+   The frontend will be available at =http://localhost:3000=
+
+* Complete Setup Process
+
+1. Start the backend first:
+   #+BEGIN_SRC bash
+   cd backend && npx directus start
+   #+END_SRC
+
+2. In a new terminal, start the frontend:
+   #+BEGIN_SRC bash
+   cd frontend && npm run dev
+   #+END_SRC
+
+* Directus Configuration
+
+Make sure your Directus backend instance has:
+- Google OAuth configured
+- =AUTH_GOOGLE_REDIRECT_ALLOW_LIST= includes =http://localhost:3000/auth/callback=
+- A =pages= collection with the schema described below
 
 * Directus Collection Schema
 
-The application expects a =pages= collection with the following fields:
+The frontend application expects a =pages= collection with the following fields:
 
 - =id= (Primary Key)
 - =title= (String) - Page title
@@ -46,3 +93,4 @@ The application expects a =pages= collection with the following fields:
 - =content= (Text/Rich Text) - Page content
 - =parent= (Relation to self) - Parent page for hierarchy
 - =order= (Integer) - Sort order within parent
+
