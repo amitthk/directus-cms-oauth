@@ -1,0 +1,15 @@
+<article>
+  <h1 class="mb-3"><%= page.title %></h1>
+
+  <!-- Simple "expand" UX via <details> -->
+  <details open class="mb-3">
+    <summary class="h5">Content</summary>
+    <div class="mt-2">
+      <%- (page.content || '').replace(/\n/g,'<br>') %>
+    </div>
+  </details>
+
+  <% if (page.parent) { %>
+    <p class="text-muted">Parent: <a href="/p/<%= page.parent.slug %>"><%= page.parent.title %></a></p>
+  <% } %>
+</article>
