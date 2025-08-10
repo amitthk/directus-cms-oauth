@@ -1,0 +1,48 @@
+#+TITLE: Directus CMS Frontend
+#+AUTHOR: 
+#+DATE: 
+
+A minimal Express.js frontend application for Directus CMS with Google OAuth authentication.
+
+* Setup
+
+1. *Install Dependencies*
+   #+BEGIN_SRC bash
+   npm install
+   #+END_SRC
+
+2. *Environment Configuration*
+   
+   The =.env= file is already configured with default values:
+   #+BEGIN_SRC env
+   APP_PORT=3000
+   DIRECTUS_URL=http://localhost:8055
+   APP_PUBLIC_URL=http://localhost:3000
+   #+END_SRC
+
+3. *Directus Configuration*
+   
+   Make sure your Directus instance has:
+   - Google OAuth configured
+   - =AUTH_GOOGLE_REDIRECT_ALLOW_LIST= includes =http://localhost:3000/auth/callback=
+   - A =pages= collection with fields: =id=, =title=, =slug=, =content=, =parent=, =order=
+
+4. *Start the Application*
+   #+BEGIN_SRC bash
+   # Development mode with auto-restart
+   npm run dev
+   
+   # Production mode
+   npm start
+   #+END_SRC
+
+* Directus Collection Schema
+
+The application expects a =pages= collection with the following fields:
+
+- =id= (Primary Key)
+- =title= (String) - Page title
+- =slug= (String) - URL-friendly identifier
+- =content= (Text/Rich Text) - Page content
+- =parent= (Relation to self) - Parent page for hierarchy
+- =order= (Integer) - Sort order within parent
